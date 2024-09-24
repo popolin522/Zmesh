@@ -14,7 +14,7 @@ Python scripts to mesh rigid bodies (nanoparticles) for the Z1+ algorithm. These
 In this setup, rigid bodies are made up of atoms of types 3 and 5. Each rigid body contains two constituent atoms of type 5, and the atom with the smaller ID is used as a reference. Users can modify this as needed.
 
 ### What is meant by "populating the connection"?
-The scripts utilize the blossom algorithm (maximum matching) to pair constituent atoms, ensuring that (1) the distances between all pairs are minimized, and (2) all constituent atoms are paired. The next step is to replicate this pairing relationship across all rigid bodies in a large-scale simulation. To do this, a characteristic atom/bead is identified in a rigid body, and the "relative pairing relationship" established in `set_mesh_pair.py` is converted into an absolute pairing relationship (i.e., bonds in the LAMMPS data file).
+The scripts utilize the blossom algorithm (maximum matching) to pair constituent atoms, ensuring that (1) the distances between all pairs are minimized, and (2) all constituent atoms are paired. The next step is to replicate this pairing relationship across all rigid bodies in a large-scale simulation. To do this, user should identify a characteristic atom/bead in a rigid body in `octa.data`. Then, the "relative pairing relationship" established in `set_mesh_pair.py` is converted into an absolute pairing relationship (i.e., bonds in the LAMMPS data file) by refering to that characteristic atom/bead.
 
 ### What is Z1+ algorithm?
 [An awesome topological data analysis package for entangled polymer system](https://doi.org/10.1016/j.cpc.2022.108567).
