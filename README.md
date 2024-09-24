@@ -1,4 +1,4 @@
-# Zmesh
+# Zmesher
 Python scripts to mesh rigid bodies (nanoparticles) for the Z1+ algorithm. These scripts create bonds between pairs of constituent atoms, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
 
 ## How to use it?
@@ -17,4 +17,4 @@ In this setup, rigid bodies are made up of atoms of types 3 and 5. Each rigid bo
 The scripts utilize the blossom algorithm (maximum matching) to pair constituent atoms, ensuring that (1) the distances between all pairs are minimized, and (2) all constituent atoms are paired. The next step is to replicate this pairing relationship across all rigid bodies in a large-scale simulation. To do this, a characteristic atom/bead is identified in a rigid body, and the "relative pairing relationship" established in `set_mesh_pair.py` is converted into an absolute pairing relationship (i.e., bonds in the LAMMPS data file).
 
 ### What is Z1+ algorithm?
-[A topological data analysis package for polymer system](https://doi.org/10.1016/j.cpc.2022.108567).
+[An awesome topological data analysis package for entangled polymer system](https://doi.org/10.1016/j.cpc.2022.108567).
