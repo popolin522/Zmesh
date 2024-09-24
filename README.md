@@ -1,4 +1,4 @@
-# Zmesher
+# Zmesh
 Python scripts to mesh rigid bodies (nanoparticles) for the Z1+ algorithm. These scripts create bonds between pairs of constituent atoms, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
 
 ## How to use it?
