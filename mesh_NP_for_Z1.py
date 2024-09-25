@@ -93,16 +93,18 @@ def add_new_bonds_based_on_blossom_algorithm(atoms, bonds, id_pair_lists, min_re
         min_ref_id (int): Reference ID for tip atoms (user-provided value ).
 
     Returns:
-        list: Updated bonds list.
+        bonds(list): Updated bonds list.
+        rigid_body_atom_id_list: A list of atom IDs that belong to the rigid body.
     """
     atom_data = {}
     reference_tip_id_difference = {}
-
+    rigid_body_atom_id_list = []
     for atom in atoms:
         atom_id = int(atom[0])
         mol_id = int(atom[1])
         atom_type = int(atom[2])
         if atom_type in [3, 5]:
+            rigid_body_atom_id_list.append(atom_id)
             atom_data.setdefault(mol_id, []).append(atom_id)
             if atom_type == 5:
                 if mol_id not in reference_tip_id_difference:
@@ -119,10 +121,28 @@ def add_new_bonds_based_on_blossom_algorithm(atoms, bonds, id_pair_lists, min_re
             bonds.append([str(bond_id), '1', str(atom_id_a), str(atom_id_b)])
             bond_id += 1
 
+    return bonds, rigid_body_atom_id_list
+
+def delete_surface_polymer_bond(atoms, bonds, rigid_body_atom_id_list):
+    """
+    This function removes bonds between atoms in a rigid body and polymer atoms connecting to it.
+    
+    Parameters:
+    - atoms: A list of atoms (not used in the current logic but retained for future expansion).
+    - bonds: A list of bonds, where each bond contains the atom IDs.
+    - rigid_body_atom_id_list: A list of atom IDs that belong to the rigid body.
+    
+    Returns:
+    - Updated bonds list with bonds involving rigid body atoms and non-rigid body atoms removed.
+    """
+    
+    # Filter out bonds where the first atom is in the rigid body and the second is not
+    bonds = [bond for bond in bonds if not (int(bond[2]) in rigid_body_atom_id_list and int(bond[3]) not in rigid_body_atom_id_list)]
+    
     return bonds
 
 
-def process_lammps_file_with_mesh(input_file, output_file, id_pair_lists,min_ref_id):
+def process_lammps_file_with_mesh(input_file, output_file, id_pair_lists, min_ref_id, do_delete_surface_polymer_bond=True):
     """
     Reads a LAMMPS file, adds new bonds based on Blossom algorithm, and writes the updated data to a new file.
 
@@ -134,8 +154,12 @@ def process_lammps_file_with_mesh(input_file, output_file, id_pair_lists,min_ref
     header, masses, pair_coeffs, bond_coeffs, atoms, bonds, velocities = read_lammps_data(input_file)
     
     # Add new bonds
-    bonds = add_new_bonds_based_on_blossom_algorithm(atoms, bonds, id_pair_lists,min_ref_id)
+    bonds, rigid_body_atom_id_list = add_new_bonds_based_on_blossom_algorithm(atoms, bonds, id_pair_lists,min_ref_id)
     
+    #Delete the bond between surface bead and the polymer bead.
+    if do_delete_surface_polymer_bond:
+        bonds = delete_surface_polymer_bond(atoms, bonds, rigid_body_atom_id_list)
+
     # Update the number of bonds in the header
     header[4] = f"{len(bonds)} bonds\n"
 
