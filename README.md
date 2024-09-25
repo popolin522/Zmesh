@@ -1,6 +1,6 @@
 # Zmesh
 Python scripts to mesh rigid bodies (nanoparticles) for the Z1+ algorithm. These scripts create bonds between pairs of constituent atoms, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
-![screenshot](illustration.png | width=100)
+<img src="illustration.png" alt="" width="100"/>
 ## How to use it?
 1. Prepare a rigid body in LAMMPS data format (e.g., `octa.data`). This will serve as a reference.
 2. Install the [NetworkX package](https://anaconda.org/anaconda/networkx#:~:text=To%20install%20this%20package%20run%20one%20of%20the) for use in `set_mesh_pair.py`.
