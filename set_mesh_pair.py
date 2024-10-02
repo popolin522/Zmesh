@@ -1,4 +1,5 @@
-# Authors: Popolin
+# Authors: Po-An Lin @ Duke University @ Arya Lab
+# Contact: poan.lin@duke.edu
 # Purpose: Process LAMMPS data, compute distance matrices with PBC, and find minimized surface pairs using the Blossom algorithm.
 
 import re
