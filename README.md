@@ -10,7 +10,8 @@ Before using the `Zmesh` scripts, make sure you have the following:
 
 1. **Python 3.x**: The scripts are written in Python and require version 3.x or later.
 2. **NetworkX Package**: This is essential for the `set_mesh_pair.py` script, which handles the meshing algorithm using graph theory. You can install it via pip: `pip install networkx`, or using Anaconda: `conda install anaconda::networkx`.
-3. **LAMMPS** (optional): The input and output data are in LAMMPS format, so you need to be familiar with preparing LAMMPS data files. In the context of this package, you only need LAMMPS installed when you need the LAMMPS script here (explained below).
+3. **Numpy**: useful python package. Do `pip install numpy` to install it or through Anaconda,
+4. **LAMMPS** (optional): The input and output data are in LAMMPS format, so you need to be familiar with preparing LAMMPS data files. In the context of this package, you only need LAMMPS installed when you need the LAMMPS script here (explained below).
 
 
 # How to use it?
