@@ -1,11 +1,12 @@
 # Authors: Po-An Lin @ Duke University @ Arya Lab
 # Contact: poan.lin@duke.edu
-# Purpose: Process LAMMPS data, compute distance matrices with PBC, and find minimized surface pairs using the Blossom algorithm.
+# Purpose: Process LAMMPS data files and update bond information based on Blossom algorithm output.
 
 import re
 import os
 import networkx as nx
 import numpy as np
+import argparse
 
 def read_lammps_data(file_path):
     """
@@ -86,26 +87,29 @@ def distance_matrix_pbc(xyz, box_lengths):
     return dist_matrix
 
 
-def find_minimized_surface_pair(coordinate, box_lengths=1000, save_dir=''):
+def find_minimized_surface_pair(atoms, box_lengths=1000, save_dir=''):
     """
     Finds the minimized surface pair using the Blossom algorithm and saves the result.
 
     Parameters:
-        coordinate (numpy.ndarray): Array of atom coordinates.
+        atoms (numpy.ndarray): Array of atom coordinates with types and stuff.
         box_lengths (numpy.ndarray or float): Lengths of the simulation box. Not an important thing here so I put in 1000 as a dummpy parameter. if the rigid body is crossing the periodic boundary, then be careful with box_lengths
         save_dir (str): Directory to save the output.
 
     Returns:
         np.ndarray: Pairs of atom IDs representing the minimized surface pair.
     """
-    # Calculate distance matrix with periodic boundary conditions
-    dist_matrix = distance_matrix_pbc(coordinate, box_lengths)
+    # Extract coordinates (assumed to be in columns 3 to 5)
+    coordinates = np.array(atoms)[:, 2:6].astype(float)
+
+    # Calculate distance matrix with periodic boundary conditions. PBC is overkill but useful if your rigid body is crossing the periodic boundary condition
+    dist_matrix = distance_matrix_pbc(coordinates, box_lengths)
 
     # Create a graph and add edges with negative distances (to minimize total distance)
     G = nx.Graph()
     
-    for i in range(len(coordinate)):
-        for j in range(i + 1, len(coordinate)):
+    for i in range(len(coordinates)):
+        for j in range(i + 1, len(coordinates)):
             dist = dist_matrix[i][j]
             G.add_edge(i, j, weight=-dist)  # Use negative distance to maximize matching
 
@@ -124,17 +128,43 @@ def find_minimized_surface_pair(coordinate, box_lengths=1000, save_dir=''):
     return id_pair_lists
 
 
-if __name__ == "__main__":
-    # Example usage
-    save_dir = os.getcwd()
-    parent_path = "" 
-    input_file = os.path.join(parent_path, 'octa.data')
+
+def main():
+    # Setup argument parser
+    parser = argparse.ArgumentParser(description="Process LAMMPS file, extract atom coordinates, and find minimized surface pair.")
     
+    # Command-line arguments
+    parser.add_argument('--save_dir', type=str, default=os.getcwd(), help='Directory to save/load files. Defaults to current working directory.')
+    parser.add_argument('--parent_path', type=str, default='', help='Parent path for input/output data files.')
+    parser.add_argument('--input_file', type=str, default='rigid_body_no_polymer.data', help='Input LAMMPS data file. Defaults to "rigid_body_no_polymer.data".')
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Full path for input file
+    input_LAMMPS_datafile = os.path.join(args.parent_path, args.input_file)
+
     # Read atom data from LAMMPS file
-    _, _, _, _, atoms, _, _ = read_lammps_data(input_file)
+    _, _, _, _, atoms, _, _ = read_lammps_data(input_LAMMPS_datafile)
     
-    # Extract coordinates (assumed to be in columns 3 to 5)
-    coordinates = np.array(atoms)[:, 2:6].astype(float)
+    # Call the function to find minimized surface pair
+    find_minimized_surface_pair(np.array(atoms))
+
+if __name__ == "__main__":
+    main()
+
+
+# if __name__ == "__main__":
+#     # Example usage
+#     save_dir = os.getcwd()
+#     parent_path = "" 
+#     input_file = os.path.join(parent_path, 'octa.data')
     
-    # Find minimized surface pair and save result
-    find_minimized_surface_pair(coordinates)
+#     # Read atom data from LAMMPS file
+#     _, _, _, _, atoms, _, _ = read_lammps_data(input_file)
+    
+#     # Extract coordinates (assumed to be in columns 3 to 5)
+#     coordinates = np.array(atoms)[:, 2:6].astype(float)
+    
+#     # Find minimized surface pair and save result
+#     find_minimized_surface_pair(coordinates)
