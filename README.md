@@ -3,8 +3,6 @@ Python scripts to mesh rigid bodies (nanoparticles) with polymer grafts for the 
 <img src="illustration.png" alt="" width="400"/>
 # Why should we mesh the rigid body (nanoparticle) for Z1+ algorithm?
 We want to trick the algorithm to account for the presence of nanoparticles during the entanglement analysis by "meshing" the surface of the rigid bodies. This involves creating bonds between pairs of atoms, where each atom connects to only one other atom, forming dumbbells. These dumbbells represent the confining surfaces of the nanoparticles. Since Z1+ keeps the terminal beads of these dumbbells fixed, the rigid obstacles (nanoparticles) remain stationary throughout the analysis.  This ensures that the polymer chains are prevented from crossing into the rigid obstacles during the minimization process.
-Here’s a suggested **Prerequisite** section for your README:
-
 
 # Prerequisites
 
