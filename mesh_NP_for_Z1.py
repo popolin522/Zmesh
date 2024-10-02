@@ -1,4 +1,5 @@
-# Authors: Popolin
+# Authors: Po-An Lin @ Duke University @ Arya Lab
+# Contact: poan.lin@duke.edu
 # Purpose: Process LAMMPS data files and update bond information based on Blossom algorithm output.
 
 import re
