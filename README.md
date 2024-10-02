@@ -1,8 +1,10 @@
 # Zmesh
-Python scripts to mesh rigid bodies (nanoparticles) for the Z1+ algorithm. These scripts create bonds between pairs of constituent atoms, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
+Python scripts to mesh rigid bodies (nanoparticles) with polymer grafts for the Z1+ algorithm. These scripts create bonds between pairs of surface constituent atoms of rigid body, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
 <img src="illustration.png" alt="" width="400"/>
+## Why should we mesh the rigid body (nanoparticle) for Z1+ algorithm?
+We want to trick the algorithm to consider the presence of nanoparticle when doing the entanglement analysis. These dumbbells act as confining surfaces, and because Z1+ does not move the terminal beads of a polymer, the obstacles (nanoparticles) are kept in place during the analysis. This ensures that the polymer chains are prevented from crossing into the rigid obstacles during the minimization process.
 ## How to use it?
-1. Prepare a rigid body in LAMMPS data format (e.g., `octa.data`). This will serve as a reference.
+1. Prepare a rigid body in LAMMPS data format (e.g., `octa.data`) WITHOUT POLYMER. This will serve as a reference. If user only has data format with both polymer and rigid body, a LAMMPS script is provided to remove polymer in it.
 2. Install the [NetworkX package](https://anaconda.org/anaconda/networkx#:~:text=To%20install%20this%20package%20run%20one%20of%20the) for use in `set_mesh_pair.py`.
 3. Run `set_mesh_pair.py`.
 4. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation.data`), which consists of multiple rigid bodies and polymers.
@@ -19,5 +21,7 @@ The scripts utilize the blossom algorithm (maximum matching) to pair constituent
 ### What is Z1+ algorithm?
 [An awesome topological data analysis package for entangled polymer system](https://doi.org/10.1016/j.cpc.2022.108567).
 
-### Cleaving Bonds Between Constituent Atoms and Polymer
+### Why cleaving bonds between constituent atom and polymer?
 For a polymer-grafted system, Zmesh will automatically remove the bond between the surface constituent atom and the polymer to prevent generating spurious statistics in Z1+. For instance, if we don't remove such a bond, Z1+ may mistakenly interpret a chain with beads N=5 grafted onto paired constituent atoms as N=7.
+### what is polymer-grafted system and why do we care?
+Polymer-grafted nanoparticle is an interesting system to study because they combine the mechanical properties / high processeibility of polymers and unique functionalities provided by nanoparticles.
