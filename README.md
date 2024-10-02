@@ -3,13 +3,24 @@ Python scripts to mesh rigid bodies (nanoparticles) with polymer grafts for the 
 <img src="illustration.png" alt="" width="400"/>
 # Why should we mesh the rigid body (nanoparticle) for Z1+ algorithm?
 We want to trick the algorithm to account for the presence of nanoparticles during the entanglement analysis by "meshing" the surface of the rigid bodies. This involves creating bonds between pairs of atoms, where each atom connects to only one other atom, forming dumbbells. These dumbbells represent the confining surfaces of the nanoparticles. Since Z1+ keeps the terminal beads of these dumbbells fixed, the rigid obstacles (nanoparticles) remain stationary throughout the analysis.  This ensures that the polymer chains are prevented from crossing into the rigid obstacles during the minimization process.
+Here’s a suggested **Prerequisite** section for your README:
+
+
+# Prerequisites
+
+Before using the `Zmesh` scripts, make sure you have the following:
+
+1. **Python 3.x**: The scripts are written in Python and require version 3.x or later.
+2. **NetworkX Package**: This is essential for the `set_mesh_pair.py` script, which handles the meshing algorithm using graph theory. You can install it via pip: `pip install networkx`, or using Anaconda: `conda install anaconda::networkx`.
+3. **LAMMPS** (optional): The input and output data are in LAMMPS format, so you need to be familiar with preparing LAMMPS data files. Additionally, if your initial data contains both polymers and nanoparticles, a LAMMPS script (`delete.in.lmp`) is provided to help you remove polymers.
+
+
 # How to use it?
 1. Prepare a rigid body in LAMMPS data format (e.g., `octa.data`) WITHOUT POLYMER. This will serve as a reference. If user only has data format with both polymer and rigid body, a LAMMPS script is provided to remove polymer (`delete.in.lmp`). 
-2. Install the [NetworkX package](https://anaconda.org/anaconda/networkx#:~:text=To%20install%20this%20package%20run%20one%20of%20the) for use in `set_mesh_pair.py`. You can install it using pip: `pip install networkx` or use Anaconda `conda install anaconda::networkx`.
-3. Run `set_mesh_pair.py` (`python3 set_mesh_pair.py` in the terminal).
-4. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation.data`), which consists of multiple rigid bodies and polymers.
-5. Identify a constituent atom in the reference data file from step (1) that will be used to establish connections in the MD simulation data. Document its ID and update the `min_ref_id` in the `mesh_NP_for_Z1.py` script accordingly.
-6. Run `mesh_NP_for_Z1.py`  (`python3 mesh_NP_for_Z1.py` in the terminal).
+2. Run `set_mesh_pair.py` (`python3 set_mesh_pair.py` in the terminal).
+3. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation.data`), which consists of multiple rigid bodies and polymers.
+4. Identify a constituent atom in the reference data file from step (1) that will be used to establish connections in the MD simulation data. Document its ID and update the `min_ref_id` in the `mesh_NP_for_Z1.py` script accordingly.
+5. Run `mesh_NP_for_Z1.py`  (`python3 mesh_NP_for_Z1.py` in the terminal).
 
 # Technical details
 ### What are types 3 and 5 in the `mesh_NP_for_Z1.py` script?
