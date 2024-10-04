@@ -15,9 +15,9 @@ Before using the `Zmesh` scripts, make sure you have the following:
 
 
 # How to use it?
-1. Prepare a rigid body in LAMMPS data format (e.g., `octa.data`) WITHOUT POLYMER. This will serve as a reference. If user only has data format with both polymer and rigid body, a LAMMPS script is provided to remove polymer (`delete.in.lmp`). 
+1. Prepare a rigid body in LAMMPS data format (e.g., `rigid_body_no_polymer.data`) WITHOUT POLYMER. This will serve as a reference. If user only has data format with both polymer and rigid body, a LAMMPS script is provided to remove polymer (`delete.in.lmp`). 
 2. Run `set_mesh_pair.py` (`python3 set_mesh_pair.py` in the terminal).
-3. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation.data`), which consists of multiple rigid bodies and polymers.
+3. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation_example.data`), which consists of multiple rigid bodies and polymers.
 4. Identify a constituent atom in the reference data file from step (1) that will be used to establish connections in the MD simulation data. Document its ID and update the `min_ref_id` in the `mesh_NP_for_Z1.py` script accordingly.
 5. Run `mesh_NP_for_Z1.py`  (`python3 mesh_NP_for_Z1.py` in the terminal).
 
@@ -36,4 +36,4 @@ For a polymer-grafted system, Zmesh will automatically remove the bond between t
 ### what is polymer-grafted system and why do we care?
 Polymer-grafted nanoparticle is an interesting system to study because they combine the mechanical properties / high processeibility of polymers and unique functionalities provided by nanoparticles.
 ### other assumptions made in this code
-I assume each rigid body contains an even number of atoms, and that the atom ID pattern is consistent across all rigid bodies (i.e., the IDs of surface atoms were not randomized for different nanoparticles. I mean, who does that?)
+I assume each rigid body contains an even number of atoms, the interparticle distance between nearest constituent atoms is smaller than 1.5$\sigma$ (b.c.s of FENE bonds), and that the atom ID pattern is consistent across all rigid bodies (i.e., the IDs of surface atoms were not randomized for different nanoparticles. I mean, who does that?)
