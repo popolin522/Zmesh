@@ -36,4 +36,4 @@ For a polymer-grafted system, Zmesh will automatically remove the bond between t
 ### what is polymer-grafted system and why do we care?
 Polymer-grafted nanoparticle is an interesting system to study because they combine the mechanical properties / high processeibility of polymers and unique functionalities provided by nanoparticles.
 ### other assumptions made in this code
-I assume each rigid body contains an even number of atoms, the interparticle distance between nearest constituent atoms is smaller than 1.5$\sigma$ (b.c.s of FENE bonds), and that the atom ID pattern is consistent across all rigid bodies (i.e., the IDs of surface atoms were not randomized for different nanoparticles. I mean, who does that?)
+I assume each rigid body contains an even number of atoms, the interparticle distance between nearest constituent atoms is smaller than 1.5 $\sigma$ (b.c.s of FENE bonds), and that the atom ID pattern is consistent across all rigid bodies (i.e., the IDs of surface atoms were not randomized for different nanoparticles. I mean, who does that?)
