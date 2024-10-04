@@ -17,9 +17,9 @@ Before using the `Zmesh` scripts, make sure you have the following:
 # How to use it?
 1. Prepare a rigid body in LAMMPS data format (e.g., `rigid_body_no_polymer.data`) WITHOUT POLYMER. This will serve as a reference. If user only has data format with both polymer and rigid body, a LAMMPS script is provided to remove polymer (`delete.in.lmp`). 
 2. Run `set_mesh_pair.py` (`python3 set_mesh_pair.py` in the terminal).
-3. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation_example.data`), which consists of multiple rigid bodies and polymers.
+3. Prepare the MD simulation data file that you wish to mesh in LAMMPS data format (e.g., `simulation_example.data`), which consists of multiple rigid bodies and polymers. The data file can be generated in LAMMPS via command `write_data XYOUR_FILEX.data`
 4. Identify a constituent atom in the reference data file from step (1) that will be used to establish connections in the MD simulation data. Document its ID and update the `min_ref_id` in the `mesh_NP_for_Z1.py` script accordingly.
-5. Run `mesh_NP_for_Z1.py`  (`python3 mesh_NP_for_Z1.py` in the terminal).
+5. Run `mesh_NP_for_Z1.py`  (`python3 mesh_NP_for_Z1.py --min_ref_id="YOUR_REF_ID"` in the terminal).
 
 # Technical details
 ### What are types 3 and 5 in the `mesh_NP_for_Z1.py` script?
