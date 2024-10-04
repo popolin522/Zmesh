@@ -23,7 +23,7 @@ Before using the `Zmesh` scripts, make sure you have the following:
 
 # Technical details
 ### What are types 3 and 5 in the `mesh_NP_for_Z1.py` script?
-In this setup, rigid bodies are made up of atoms of types 3 and 5. Each rigid body contains two constituent atoms of type 5, and the atom with the smaller ID is used as a reference. Users can modify this as needed.
+In this setup, rigid bodies are made up of atoms of types 3 and 5. Each rigid body contains two constituent atoms of type 5, and the atom with the smaller ID is used as a reference. instead of using atom type to find reference, users can also use the smallest ID in the rigid body as the reference by running `python3 mesh_NP_for_Z1.py --min_ref_id="YOUR_REF_ID" --do_selection_based_on_type=False`. 
 
 ### What is meant by "populating the connection"?
 The scripts utilize the blossom algorithm (maximum matching) to pair constituent atoms, ensuring that (1) the distances between all pairs are minimized, and (2) all constituent atoms are paired. The next step is to broadcast this pairing relationship across all rigid bodies in a large-scale simulation. To do this, user should identify a characteristic atom/bead in a rigid body in `octa.data`. Then, the "relative pairing relationship" established in `set_mesh_pair.py` is converted into an absolute pairing relationship (i.e., bonds in the LAMMPS data file) by refering to that characteristic atom/bead.
