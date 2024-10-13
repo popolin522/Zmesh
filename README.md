@@ -1,5 +1,5 @@
 # Zmesh
-Python scripts to mesh rigid bodies (nanoparticles) with polymer grafts for the Z1+ algorithm. These scripts create bonds between pairs of surface constituent atoms of rigid body, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
+Python scripts to mesh rigid bodies (nanoparticles) with polymer grafts for the Z1+ algorithm. These scripts create bonds between pairs of surface constituent atoms of rigid body based on the idea of Maximum Matching, and the final output is a processed LAMMPS data file ready for use in the Z1+ algorithm.
 <img src="illustration.png" alt="" width="400"/>
 # Why should we mesh the rigid body (nanoparticle) for Z1+ algorithm?
 We want to trick the algorithm to account for the presence of nanoparticles during the entanglement analysis by "meshing" the surface of the rigid bodies. This involves creating bonds between pairs of atoms, where each atom connects to only one other atom, forming dumbbells. These dumbbells represent the confining surfaces of the nanoparticles. Since Z1+ keeps the terminal beads of these dumbbells fixed, the rigid obstacles (nanoparticles) remain stationary throughout the analysis.  This ensures that the polymer chains are prevented from crossing into the rigid obstacles during the minimization process.
